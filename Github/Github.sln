@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Github", "Github.csproj", "{979BEC47-27FA-4EFB-A0B3-3512056CEA1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Github.Test", "..\Test\Github.Test.csproj", "{DFCFA103-3A8B-4DEA-A740-48C40C2660BC}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{791FC0F7-83EB-42F2-A2EA-DFCFD4BE4282}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{979BEC47-27FA-4EFB-A0B3-3512056CEA1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{979BEC47-27FA-4EFB-A0B3-3512056CEA1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{979BEC47-27FA-4EFB-A0B3-3512056CEA1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{979BEC47-27FA-4EFB-A0B3-3512056CEA1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFCFA103-3A8B-4DEA-A740-48C40C2660BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFCFA103-3A8B-4DEA-A740-48C40C2660BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFCFA103-3A8B-4DEA-A740-48C40C2660BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFCFA103-3A8B-4DEA-A740-48C40C2660BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791FC0F7-83EB-42F2-A2EA-DFCFD4BE4282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791FC0F7-83EB-42F2-A2EA-DFCFD4BE4282}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791FC0F7-83EB-42F2-A2EA-DFCFD4BE4282}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791FC0F7-83EB-42F2-A2EA-DFCFD4BE4282}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE177AA5-70EE-48CB-A702-29D501FD5D04}
+	EndGlobalSection
+EndGlobal

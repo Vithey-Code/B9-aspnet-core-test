@@ -1,0 +1,72 @@
+# ASP.NET Core
+bin/
+obj/
+PublishProfiles/
+Logs/
+*.swp
+*~
+
+# Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+*_i.c
+*_p.c
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.manifest
+*.msi
+*.pdb
+*.res
+*.pch
+*.ilk
+*.exp
+*.bak
+*.ncb
+*.aps
+*.clw
+*.opt
+*.pch
+*.plg
+*.bpg
+*.bsc
+*.tlh
+*.tlb
+*.vbw
+*.vspscc
+*.vshost.*
+*.psess
+*.vsp
+*.vspx
+*.userprefs
+*.gradle
+
+# Rider
+.idea/
+*.sln.iml
+*.iml
+
+# NuGet
+*.nupkg
+*.snupkg
+/.nuget/
+/packages/
+# Microsoft.AspNetCore
+*.swp
+*~
+
+# Test Results
+# [TestResults|_test*]*
+
+# Build Results
+# [BuildResults]*
+
+# StyleCop
+StyleCopReport.xml
