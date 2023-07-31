@@ -29,8 +29,12 @@ There are two ways in order to run an application:
  ![image](https://github.com/Vithey-Code/B9-aspnet-core-test/assets/114791690/1c1c042f-9c1e-4b13-8fbd-083906f9956a)
     As we are using anonymous API and Github also has an implementation rate limit, sometimes we are getting blocked in the request and I also alert the message to notify to the user.
  ![b9-4](https://github.com/Vithey-Code/B9-aspnet-core-test/assets/114791690/799499c8-6b55-4e1e-837b-8a0906406040)
+   Testing result
+ ![image](https://github.com/Vithey-Code/B9-aspnet-core-test/assets/114791690/b588d9a5-552a-4eab-ae08-133a161ca788)
+
+
   
-5. ### Addition Information
+6. ### Addition Information
    **Can’t search by labels**
    
     GitHub's API does not have a specific endpoint to search for pull requests by labels without authentication. The ability to search for pull requests by labels is typically restricted to authenticated users to prevent abuse.
