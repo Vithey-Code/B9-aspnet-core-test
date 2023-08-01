@@ -2,7 +2,7 @@
 
 There are two ways in order to run an application:
 1. ### Run in Visual Studio
-	Clone git@github.com:Vithey-Code/B9-aspnet-core-test.git and CD into B9-aspnet-core-test\Github folder
+	Clone [git@github.com:Vithey-Code/B9-aspnet-core-test.git](https://github.com/Vithey-Code/B9-aspnet-core-test/tree/main) and CD into B9-aspnet-core-test\Github folder
 	and open Github.sln.
 	There are two folders after you clone this project:
 		1. Github: it is a main project
