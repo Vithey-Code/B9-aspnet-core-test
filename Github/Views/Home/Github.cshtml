@@ -1,6 +1,5 @@
 ﻿@*This UI is just a show case only, so I decided to make it simple just ensure some condititons are apply.*@
 
-
 <div class="row g-3">
     <div class="col-md-4">
         <label for="owner" class="form-label">Repository Owner:</label>
@@ -23,184 +22,189 @@
 <input type="button" id="btnSearch" value="Search Pull Request" class="btn btn-primary">
 <p></p>
 
-<!-- Display Active Pull Requests -->
-<h2>Active Pull Requests</h2>
-<ul id="activePullRequests"></ul>
+<div class="spinner-border spinner-border-sm" role="status" id="progress"></div>
 
-<!-- Display Draft Pull Requests -->
-<h2>Draft Pull Requests</h2>
-<ul id="draftPullRequests"></ul>
+    <!-- Display Active Pull Requests -->
+    <h2>Active Pull Requests</h2>
+    <ul id="activePullRequests"></ul>
 
-<!-- Display Stale Pull Requests -->
-<h2>Stale Pull Requests</h2>
-<ul id="stalePullRequests"></ul>
+    <!-- Display Draft Pull Requests -->
+    <h2>Draft Pull Requests</h2>
+    <ul id="draftPullRequests"></ul>
 
-<!-- Display Average Days -->
-<h2>Average Days</h2>
-<p>Active: <span id="activeAverageDays"></span></p>
-<p>Draft: <span id="draftAverageDays"></span></p>
-<p>Stale: <span id="staleAverageDays"></span></p>
-<p>All Groups: <span id="allGroupsAverageDays"></span></p>
+    <!-- Display Stale Pull Requests -->
+    <h2>Stale Pull Requests</h2>
+    <ul id="stalePullRequests"></ul>
 
-@section scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        // Function to load pull requests data using Ajax
-        function loadPullRequestsData(requestData) {
-            $.ajax({
-                type: "GET",
-                url: "http://localhost:5000/github/GetPullRequest",
-                data: requestData,
-                success: function (data) {
-                    // Display active pull requests
-                    var activePullRequestsHtml = "";
-                    console.log("data:", data);
-                    $.each(data.activePullRequests, function (index, pullRequest) {
-                        activePullRequestsHtml += `
-                                                <li>
-                                                    <h3>${pullRequest.title}</h3>
-                                                    <p>Description: ${pullRequest.description?.substring(0, 100)}...</p>
-                                                    <p>Created Date: ${pullRequest.createdOn}</p>
-                                                    <p>Comment Count: ${pullRequest.comments}</p>
-                                                    <p>Author:</p>
-                                                    <ul>
-                                                        <li>
-                                                            <p>Avatar: <img src="${pullRequest.creator.avatarUrl}" alt="Avatar" width="30"></p>
-                                                        </li>
-                                                        <li>
-                                                            <p>Name: ${pullRequest.creator.name}</p>
-                                                        </li>
-                                                        <li>
-                                                            <p>Email: ${pullRequest.creator.email}</p>
-                                                        </li>
-                                                    </ul
-                                                    <p>Commits:</p>
-                                                    <ul>
-                                                        ${pullRequest.commits.map((commit) => `
-                                                            <li>
-                                                                <p>Hash: ${commit.hash}</p>
-                                                                <p>Author: ${commit.commitInfo.author.name}</p>
-                                                                <p>Email: ${commit.commitInfo.author.email}</p>
-                                                                <p>Date: ${commit.commitInfo.author.date}</p>
-                                                                <p>Message: ${commit.commitInfo.message}</p>
-                                                                            
-                                                            </li>
-                                                        `).join('')}
-                                                    </ul>
+    <!-- Display Average Days -->
+    <h2>Average Days</h2>
+    <p>Active: <span id="activeAverageDays"></span></p>
+    <p>Draft: <span id="draftAverageDays"></span></p>
+    <p>Stale: <span id="staleAverageDays"></span></p>
+    <p>All Groups: <span id="allGroupsAverageDays"></span></p>
 
-                                                </li>`;
-                    });
-                    $("#activePullRequests").html(activePullRequestsHtml);
+                @section scripts {
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            // Function to load pull requests data using Ajax
+            function loadPullRequestsData(requestData) {
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:5000/github/GetPullRequest",
+                    data: requestData,
+                    success: function (data) {
+                        // Display active pull requests
+                        var activePullRequestsHtml = "";
+                        console.log("data:", data);
+                        if (data != null) {
+                            $("#progress").hide();
+                        }
+                        $.each(data.activePullRequests, function (index, pullRequest) {
+                            activePullRequestsHtml += `
+                                                                            <li>
+                                                                                <h3>${pullRequest.title}</h3>
+                                                                                <p>Description: ${pullRequest.description?.substring(0, 100)}...</p>
+                                                                                <p>Created Date: ${pullRequest.createdOn}</p>
+                                                                                <p>Comment Count: ${pullRequest.comments}</p>
+                                                                                <p>Author:</p>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <p>Avatar: <img src="${pullRequest.creator.avatarUrl}" alt="Avatar" width="30"></p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Name: ${pullRequest.creator.name}</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Email: ${pullRequest.creator.email}</p>
+                                                                                    </li>
+                                                                                </ul
+                                                                                <p>Commits:</p>
+                                                                                <ul>
+                                                                                    ${pullRequest.commits.map((commit) => `
+                                                                                        <li>
+                                                                                            <p>Hash: ${commit.hash}</p>
+                                                                                            <p>Author: ${commit.commitInfo.author.name}</p>
+                                                                                            <p>Email: ${commit.commitInfo.author.email}</p>
+                                                                                            <p>Date: ${commit.commitInfo.author.date}</p>
+                                                                                            <p>Message: ${commit.commitInfo.message}</p>
 
-                    // Display draft pull requests
-                    var draftPullRequestsHtml = "";
-                    $.each(data.draftPullRequests, function (index, pullRequest) {
-                        draftPullRequestsHtml += `
-                                            <li>
-                                                <h3>${pullRequest.title}</h3>
-                                                <p>Description: ${pullRequest.description?.substring(0, 100)}...</p>
-                                                <p>Created Date: ${pullRequest.createdOn}</p>
-                                                <p>Comment Count: ${pullRequest.comments}</p>
-                                                <p>Author:</p>
-                                                <ul>
-                                                    <li>
-                                                        <p>Avatar: <img src="${pullRequest.creator.avatarUrl}" alt="Avatar" width="30"></p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Name: ${pullRequest.creator.name}</p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Email: ${pullRequest.creator.email}</p>
-                                                    </li>
-                                                </ul>
-                                                    <p>Commits:</p>
-                                                <ul>
-                                                    ${pullRequest.commits.map((commit) => `
-                                                        <li>
-                                                            <p>Hash: ${commit.hash}</p>
-                                                            <p>Author: ${commit.commitInfo.author.name}</p>
-                                                            <p>Email: ${commit.commitInfo.author.email}</p>
-                                                            <p>Date: ${commit.commitInfo.author.date}</p>
-                                                            <p>Message: ${commit.commitInfo.message}</p>
+                                                                                        </li>
+                                                                                    `).join('')}
+                                                                                </ul>
 
-                                                        </li>
-                                                    `).join('')}
-                                                </ul>
-                                            </li>`;
-                    });
-                    $("#draftPullRequests").html(draftPullRequestsHtml);
+                                                                            </li>`;
+                        });
+                        $("#activePullRequests").html(activePullRequestsHtml);
 
-                    // Display stale pull requests
-                    var stalePullRequestsHtml = "";
-                    $.each(data.stalePullRequests, function (index, pullRequest) {
-                        stalePullRequestsHtml += `
-                                                <li>
-                                                    <h3>${pullRequest.title}</h3>
-                                                    <p>Description: ${pullRequest.description?.substring(0, 100)}...</p>
-                                                    <p>Created Date: ${pullRequest.createdOn}</p>
-                                                    <p>Comment Count: ${pullRequest.comments}</p>
-                                                    <p>Stale Days: ${pullRequest.staleDays}</p>
-                                                    <p>Author:</p>
-                                                    <ul>
-                                                        <li>
-                                                            <p>Avatar: <img src="${pullRequest.creator.avatarUrl}" alt="Avatar" width="30"></p>
-                                                        </li>
-                                                        <li>
-                                                            <p>Name: ${pullRequest.creator.name}</p>
-                                                        </li>
-                                                        <li>
-                                                            <p>Email: ${pullRequest.creator.email}</p>
-                                                        </li>
-                                                    </ul>
-                                                    <p>Commits:  </p>
-                                                    <ul>
-                                                        ${pullRequest.commits.map((commit) => `
-                                                            <li>
-                                                                <p>Hash: ${commit.hash}</p>
-                                                                <p>Author: ${commit.commitInfo.author.name}</p>
-                                                                <p>Email: ${commit.commitInfo.author.email}</p>
-                                                                <p>Date: ${commit.commitInfo.author.date}</p>
-                                                                <p>Message: ${commit.commitInfo.message}</p>
+                        // Display draft pull requests
+                        var draftPullRequestsHtml = "";
+                        $.each(data.draftPullRequests, function (index, pullRequest) {
+                            draftPullRequestsHtml += `
+                                                                        <li>
+                                                                            <h3>${pullRequest.title}</h3>
+                                                                            <p>Description: ${pullRequest.description?.substring(0, 100)}...</p>
+                                                                            <p>Created Date: ${pullRequest.createdOn}</p>
+                                                                            <p>Comment Count: ${pullRequest.comments}</p>
+                                                                            <p>Author:</p>
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <p>Avatar: <img src="${pullRequest.creator.avatarUrl}" alt="Avatar" width="30"></p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p>Name: ${pullRequest.creator.name}</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p>Email: ${pullRequest.creator.email}</p>
+                                                                                </li>
+                                                                            </ul>
+                                                                                <p>Commits:</p>
+                                                                            <ul>
+                                                                                ${pullRequest.commits.map((commit) => `
+                                                                                    <li>
+                                                                                        <p>Hash: ${commit.hash}</p>
+                                                                                        <p>Author: ${commit.commitInfo.author.name}</p>
+                                                                                        <p>Email: ${commit.commitInfo.author.email}</p>
+                                                                                        <p>Date: ${commit.commitInfo.author.date}</p>
+                                                                                        <p>Message: ${commit.commitInfo.message}</p>
 
-                                                            </li>
-                                                        `).join('')}
-                                                    </ul>
-                                                </li>`;
-                    });
-                    $("#stalePullRequests").html(stalePullRequestsHtml);
+                                                                                    </li>
+                                                                                `).join('')}
+                                                                            </ul>
+                                                                        </li>`;
+                        });
+                        $("#draftPullRequests").html(draftPullRequestsHtml);
 
-                    // Display average days
-                    $("#activeAverageDays").text(data.activeAverageDays.toFixed(2));
-                    $("#draftAverageDays").text(data.draftAverageDays.toFixed(2));
-                    $("#staleAverageDays").text(data.staleAverageDays.toFixed(2));
-                    $("#allGroupsAverageDays").text(data.allGroupsAverageDays.toFixed(2));
-                },
-                error: function (data, xhr, textStatus, errorThrown) {
-                    alert(data.responseJSON.errorMessage);
-                }
+                        // Display stale pull requests
+                        var stalePullRequestsHtml = "";
+                        $.each(data.stalePullRequests, function (index, pullRequest) {
+                            stalePullRequestsHtml += `
+                                                                            <li>
+                                                                                <h3>${pullRequest.title}</h3>
+                                                                                <p>Description: ${pullRequest.description?.substring(0, 100)}...</p>
+                                                                                <p>Created Date: ${pullRequest.createdOn}</p>
+                                                                                <p>Comment Count: ${pullRequest.comments}</p>
+                                                                                <p>Stale Days: ${pullRequest.staleDays}</p>
+                                                                                <p>Author:</p>
+                                                                                <ul>
+                                                                                    <li>
+                                                                                                <p>Avatar: <img src="${pullRequest.creator?.avatarUrl}" alt="Avatar" width="30"></p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Name: ${pullRequest.creator.name}</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Email: ${pullRequest.creator.email}</p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                                <p>Commits:  </p>
+                                                                                <ul>
+                                                                                    ${pullRequest.commits.map((commit) => `
+                                                                                        <li>
+                                                                                            <p>Hash: ${commit.hash}</p>
+                                                                                            <p>Author: ${commit.commitInfo.author.name}</p>
+                                                                                            <p>Email: ${commit.commitInfo.author.email}</p>
+                                                                                            <p>Date: ${commit.commitInfo.author.date}</p>
+                                                                                            <p>Message: ${commit.commitInfo.message}</p>
+
+                                                                                        </li>
+                                                                                    `).join('')}
+                                                                                </ul>
+                                                                            </li>`;
+                        });
+                        $("#stalePullRequests").html(stalePullRequestsHtml);
+
+                        // Display average days
+                        $("#activeAverageDays").text(data.activeAverageDays.toFixed(2));
+                        $("#draftAverageDays").text(data.draftAverageDays.toFixed(2));
+                        $("#staleAverageDays").text(data.staleAverageDays.toFixed(2));
+                        $("#allGroupsAverageDays").text(data.allGroupsAverageDays.toFixed(2));
+                    },
+                    error: function (data, xhr, textStatus, errorThrown) {
+                        alert(data.responseJSON.errorMessage);
+                    }
+                });
+            }
+
+            // Load pull requests data when the page is first opened
+            $(document).ready(function () {
+                loadPullRequestsData(null);
+
+                // Handle search button click using Ajax
+                $("#btnSearch").click(function (event) {
+                    event.preventDefault();
+                    $("#progress").show();
+                    var requestData = {
+                        Owner: $("#owner").val(),
+                        RepositoryName: $("#repositoryName").val(),
+                        Labels: $("#label").val(),
+                        CustomQuery: $("#customQuery").val()
+                    };
+
+                    console.log("Request Data: ", requestData);
+
+                    loadPullRequestsData(requestData);
+                });
             });
-        }
 
-        // Load pull requests data when the page is first opened
-        $(document).ready(function () {
-            loadPullRequestsData(null);
-
-            // Handle search button click using Ajax
-            $("#btnSearch").click(function (event) {
-                event.preventDefault();
-
-                var requestData = {
-                    Owner: $("#owner").val(),
-                    RepositoryName: $("#repositoryName").val(),
-                    Labels: $("#label").val(),
-                    CustomQuery: $("#customQuery").val()
-                };
-
-                console.log("Request Data: ", requestData);
-
-                loadPullRequestsData(requestData);
-            });
-        });
-
-    </script>
-}
+        </script>
+    }
